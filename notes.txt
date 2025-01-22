@@ -1,0 +1,6 @@
+brew install xyz
+    where xyz is the package you want to install
+
+python3 -m venv path/to/venv
+source path/to/venv/bin/activate
+python3 -m pip install xyz
