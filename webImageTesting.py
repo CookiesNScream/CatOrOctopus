@@ -12,5 +12,5 @@ def search_images(term, max_images=30):
         return L(image_urls)
 
 # Example usage:
-urls = search_images("dog images", max_images=10)
-print(urls[0])
+urls = search_images("octopus in the wild", max_images=200)
+print(urls)
