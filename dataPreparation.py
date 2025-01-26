@@ -52,6 +52,7 @@ def prepare_data():
       labels.append(target_class)
 
     df = pd.DataFrame({'filename': image_paths, 'class': labels})
+    print(df)
     dataframe.append(df)
     return dataframe
 
@@ -73,9 +74,9 @@ def prepare_data():
 
   training_dataframe_supplemented = create_dataframe_from_webscrape(188, "octopus", dataframe_training)
 
-  test_data_suplemented1 = create_dataframe_from_directory(f"{root}/.cache/kagglehub/datasets/iamsouravbanerjee/animal-image-dataset-90-different-animals/versions/5/animals/animals/cat",
-                                                      "cat", 
-                                                      dataframe_test)
+  #test_data_suplemented1 = create_dataframe_from_directory(f"{root}/.cache/kagglehub/datasets/iamsouravbanerjee/animal-image-dataset-90-different-animals/versions/5/animals/animals/cat",
+  #                                                    "cat", 
+  #                                                    dataframe_test)
   #print(len(dataframe_test))
   final_test_dataframe = pd.concat(dataframe_test, ignore_index=True)
   final_training_dataframe = pd.concat(dataframe_training, ignore_index=True)
@@ -116,3 +117,4 @@ def prepare_data():
 1623 cat train i want 750
 562 octo train i want 750
 '''
+prepare_data()
