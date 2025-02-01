@@ -21,17 +21,23 @@ def prepare_data():
 
     #maxImageCount = 750 #this should be 750 or depending on the web scrape trust 
     imageCount = 0
-    while (imageCount <= maxImageCount):
-      for i in range(len(random_image[0])): #if "blah" not in somestring: 
-        if ".cat" not in random_image[0][i] and "Thumbs.db" not in random_image[0][i]:
-          # df = mpimg.imread(target_dir + "/" + random_image[0][i])
-          # #dataframe.append(df.tolist())
-          # dataframe.append(df)
-          image_paths.append(target_dir + "/" + random_image[0][i])
-          labels.append(target_class)
-          imageCount += 1
-
-    
+    for i in range(len(random_image[0])): #if "blah" not in somestring: 
+      if(imageCount >= maxImageCount):
+          break
+      if ".cat" not in random_image[0][i] and "Thumbs.db" not in random_image[0][i]:
+        # df = mpimg.imread(target_dir + "/" + random_image[0][i])
+        # #dataframe.append(df.tolist())
+        # dataframe.append(df)
+        image_paths.append(target_dir + "/" + random_image[0][i])
+        labels.append(target_class)
+        imageCount += 1
+        
+          
+    # if ("/.cache/kagglehub/datasets/iamsouravbanerjee/animal-image-dataset-90-different-animals/versions/5/animals/animals/cat" in target_dir):
+    #         for i in range(1, len(image_paths)):
+    #            if (image_paths[i] == image_paths[0]):
+    #               print("repeat", i)
+    #         print(len(image_paths))
     df = pd.DataFrame({'filename': image_paths, 'class': labels})
     dataframe.append(df)
     return dataframe
@@ -52,7 +58,7 @@ def prepare_data():
       labels.append(target_class)
 
     df = pd.DataFrame({'filename': image_paths, 'class': labels})
-    print(df)
+    #print(df)
     dataframe.append(df)
     return dataframe
 
@@ -61,13 +67,16 @@ def prepare_data():
   root = "/Users/ErenYeager"
   cat_test_dataframe = create_dataframe_from_directory(f"{root}/.cache/kagglehub/datasets/iamsouravbanerjee/animal-image-dataset-90-different-animals/versions/5/animals/animals/cat",
                                                       "cat", 
-                                                      dataframe_test)
+                                                      dataframe_test,
+                                                      maxImageCount=60)
   cat_and_octopus_test_dataframe = create_dataframe_from_directory(f"{root}/.cache/kagglehub/datasets/iamsouravbanerjee/animal-image-dataset-90-different-animals/versions/5/animals/animals/octopus", 
                                                           "octopus", 
-                                                          dataframe_test)
+                                                          dataframe_test,
+                                                          maxImageCount=60)
   cat_training_dataframe = create_dataframe_from_directory(f"{root}/.cache/kagglehub/datasets/crawford/cat-dataset/versions/2/CAT_03", 
                                                           "cat", 
-                                                          dataframe_training)
+                                                          dataframe_training,
+                                                          maxImageCount=562)
   cat_and_octopus_training_dataframe = create_dataframe_from_directory(f"{root}/.cache/kagglehub/datasets/vencerlanz09/sea-animals-image-dataste/versions/5/Octopus", 
                                                                       "octopus", 
                                                                       dataframe_training)
@@ -94,7 +103,7 @@ def prepare_data():
                                              height_shift_range=0.2, # shift the image height ways
                                              horizontal_flip=True)
 
-  train_data = train_datagen_noAug.flow_from_dataframe(final_training_dataframe,
+  train_data = train_datagen_augmented.flow_from_dataframe(final_training_dataframe,
                                                 batch_size=32, # number of images to process at a time 
                                                 target_size=(224, 224), # convert all images to be 224 x 224
                                                 class_mode="binary", # type of problem we're working on
@@ -102,7 +111,7 @@ def prepare_data():
                                                 shuffle=True)
 
   test_data = valid_datagen.flow_from_dataframe(final_test_dataframe,
-                                                batch_size=32, # number of images to process at a time 
+                                                #batch_size=32, # number of images to process at a time 
                                                 target_size=(224, 224), # convert all images to be 224 x 224
                                                 class_mode="binary", # type of problem we're working on
                                                 seed=42,
@@ -117,4 +126,3 @@ def prepare_data():
 1623 cat train i want 750
 562 octo train i want 750
 '''
-prepare_data()

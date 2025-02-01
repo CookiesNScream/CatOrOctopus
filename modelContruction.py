@@ -21,7 +21,7 @@ def construct_model():
     ])
 
     model.compile(loss="binary_crossentropy",
-                optimizer=tf.keras.optimizers.Adam(learning_rate=0.002),
+                optimizer=tf.keras.optimizers.Adam(learning_rate=0.00125),
                 metrics=["accuracy"])
 
     #model.summary()
