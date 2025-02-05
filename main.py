@@ -11,3 +11,4 @@ training_data, test_data = prepare_data() # should return into two variables or 
 model = construct_model() #could take params or not idk
 
 history = train_model(model, training_data, test_data, 10)
+ 
